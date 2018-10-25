@@ -53,8 +53,9 @@ def add_user():
         username = request.form['username']
 
         password = hashlib.md5(request.form['password'].encode('utf-8')).hexdigest()
-        mobile = request.form['mobile']
-        
+        mobile1 = request.form['mobile1']
+        mobile2 = request.form['mobile2']
+        mobile3 = request.form['mobile3']
 
         if len(request.form['password']) < 8:
             error = "Password must be 8 characters long!"
@@ -68,8 +69,8 @@ def add_user():
             else:
 
                 Database.db.cur.execute("""insert into users values (:param1, :param2, :param3, :param4, :param5, :param6,  
-                                        :param7, :param8, :param9, :param10,:param11)""",
-                                        (username, fname, lname, gender, address1, address2, city, zip, email, password,mobile))
+                                        :param7, :param8, :param9, :param10,:param11,:param12,:param13)""",
+                                        (username, fname, lname, gender, address1, address2, city, zip, email, password,mobile1,mobile2,mobile3))
                 msg = "Data added successfully!"
                 session['username'] = username
                 return redirect(url_for('dashboard'))
