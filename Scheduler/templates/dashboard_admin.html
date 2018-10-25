@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Defect Tracking System</title>
+  </head>
+  <body>
+
+    <!-- Navigation Bar -->
+    <div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+        <a href="#" class="w3-bar-item w3-button w3-text-blue w3-hover-sand"><b><img src="th.jpg" height="30px" width="30px"> DTS </b></a>
+
+        <a href="#" class="w3-bar-item w3-button w3-right w3-text-blue w3-hover-sand">Hi, {{ session['username'] }} </a>
+    </div>
+    <div class="wrapper">
+        <div class="left">
+
+
+            <div class="side_nav">
+                <ul>
+                    <li class="active"><a href="/dashboard_admin"><i class="far fa-home"></i>My View</a></li>
+                    <li><a href="/view_defects"><i class="fas fa-search"></i>View Defects</a></li>
+                    <li><a href="/report_defect"><i class="far fa-file-alt"></i>Report Defect</a></li>
+					<li><a href="/add_project"><i class="fas fa-plus"></i>Add Project</a></li>
+                    <li><a href="/add_member"><i class="fas fa-user-plus"></i>Add Member</a></li>
+                    <li><a href="/logout"><i class="fas fa-power-off"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="right">
+            <div class="container">
+
+
+
+
+
+
+                        <div class="row">
+
+
+
+                                <div class="w3-bar w3-black" style="width:100%">
+                                  <button class="w3-button tablink" onclick="openLink(event, 'atm');">Assigned to me</button>
+                                        {% if error %}
+                                            <div class="col-md-12 error_form">Error: {{ error }}</div>
+                                        {% endif %}
+                                        {% if msg %}
+                                            <div class="col-md-12 error_form">Success: {{ msg }}</div>
+                                        {% endif %}
+
+                                        <button class="w3-button tablink" onclick="openLink(event, 'rbm');">Reported by me</button>
+                                        {% if error %}
+                                            <div class="col-md-12 error_form">Error: {{ error }}</div>
+                                        {% endif %}
+                                        {% if msg %}
+                                            <div class="col-md-12 error_form">Success: {{ msg }}</div>
+                                        {% endif %}
+
+                                        <button class="w3-button tablink" onclick="openLink(event, 'res');">Resolved</button>
+                                        {% if error %}
+                                            <div class="col-md-12 error_form">Error: {{ error }}</div>
+                                        {% endif %}
+                                        {% if msg %}
+                                            <div class="col-md-12 error_form">Success: {{ msg }}</div>
+                                        {% endif %}
+
+                                        <button class="w3-button tablink" onclick="openLink(event, 'rm');">Recently modified</button>
+                                        {% if error %}
+                                            <div class="col-md-12 error_form">Error: {{ error }}</div>
+                                        {% endif %}
+                                        {% if msg %}
+                                            <div class="col-md-12 error_form">Success: {{ msg }}</div>
+                                        {% endif %}
+
+
+
+                                </div>
+
+
+                                <div id="atm" class="w3-container w3-white w3-padding-24 myLink">
+
+                                    {% if issue %}
+                                        {% for i in issue: %}
+
+                                            <h1>{{ i[7] }}</h1>
+                                            <h3>Project:{{ i[1] }}</h3>
+                                            <p>Category:{{ i[2] }}</p>
+                                            <p>Severity:{{ i[3] }}</p>
+                                            <p>Priority:{{ i[4] }}</p>
+                                            <p>Date:{{ i[8] }}</p>
+                                            <br /><hr><br />
+                                        {% endfor %}
+                                    {% else %}
+                                            <h1>No defects are reported...</h1>
+                                    {% endif %}
+                                </div>
+                                <div id="rbm" class="w3-container w3-white w3-padding-24 myLink">
+                                    {% if report %}
+                                        {% for i in report: %}
+
+                                            <h1>{{ i[7] }}</h1>
+                                            <h3>Project:{{ i[1] }}</h3>
+                                            <p>Category:{{ i[2] }}</p>
+                                            <p>Severity:{{ i[3] }}</p>
+                                            <p>Priority:{{ i[4] }}</p>
+                                            <p>Date:{{ i[8] }}</p>
+                                            <br /><hr><br />
+                                        {% endfor %}
+                                    {% else %}
+                                            <h1>No defects are reported...</h1>
+                                    {% endif %}
+                                </div>
+                                <div id="res" class="w3-container w3-white w3-padding-24 myLink">
+                                    {% if resolve %}
+                                        {% for i in resolve: %}
+
+                                            <h1>{{ i[7] }}</h1>
+                                            <h3>Project:{{ i[1] }}</h3>
+                                            <p>Category:{{ i[2] }}</p>
+                                            <p>Severity:{{ i[3] }}</p>
+                                            <p>Priority:{{ i[4] }}</p>
+                                            <p>Date:{{ i[8] }}</p>
+                                            <br /><hr><br />
+                                        {% endfor %}
+                                    {% else %}
+                                            <h1>No defects are resolved...</h1>
+                                    {% endif %}
+                                </div>
+                                <div id="rm" class="w3-container w3-white w3-padding-24 myLink">
+                                    {% if rm %}
+                                        {% for i in rm: %}
+
+                                            <h1>{{ i[7] }}</h1>
+                                            <h3>Project:{{ i[1] }}</h3>
+                                            <p>Category:{{ i[2] }}</p>
+                                            <p>Severity:{{ i[3] }}</p>
+                                            <p>Priority:{{ i[4] }}</p>
+                                            <p>Date:{{ i[8] }}</p>
+                                            <br /><hr><br />
+                                        {% endfor %}
+                                    {% else %}
+                                            <h1>No defects are modified...</h1>
+                                    {% endif %}
+                                </div>
+
+
+
+
+                        </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Tabs
+    function openLink(evt, linkName) {
+      var i, x, tablinks;
+      x = document.getElementsByClassName("myLink");
+      for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < x.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+      }
+      document.getElementById(linkName).style.display = "block";
+      evt.currentTarget.className += " w3-red";
+    }
+    // Click on the first tablink on load
+    document.getElementsByClassName("tablink")[0].click();
+    </script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.vide.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+  </body>
+</html>

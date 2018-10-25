@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
+    <title>Event Schedular</title>
+  </head>
+  <body class="w3-sand">
+  <!-- Navigation Bar -->
+    <div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+      <a href="#" class="w3-bar-item w3-button w3-text-blue w3-hover-blue"><b><img src="th.jpg" height="30px" width="30px"> ES </b></a>
+      <a href="#" class="w3-bar-item w3-button w3-right w3-hover-blue w3-text-grey"><i class="fa fa-search"></i> </a>
+    </div>
+  <div class="w3-container">
+    <div class="w3-col s9">
+        <h1>Event Scheduler</h1>
+        <p style="color:black;">It helps the user to keep track of the events....</p>
+        <p style="color:black;"></p>
+    </div>
+    <div class="w3-col s3 w3-light-blue">
+        <h1 style="text-align:center;">LOG IN</h1>
+        {% if error %}
+        <p style="color:red;margin-top:-35px;">Error: {{ error }}</p>
+        {% endif %}
+        <form method="post" action="/">
+            <div class="tbox">
+                <input type="text" name="username" placeholder="@username" required>
+            </div>
+            <div class="tbox">
+                <input type="password" name="password" placeholder="password" required>
+            </div>
+            <input class="btn" type="submit" name="login" value="LOG IN" />
+        </form>
+
+        <a class="b1" href="#">FORGOT PASSWORD?</a>
+        <a class="b1" href="/create_account">CREATE ACCOUNT</a>
+    </div>
+  </div>
+
+
+
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.vide.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+
+  </body>
+</html>

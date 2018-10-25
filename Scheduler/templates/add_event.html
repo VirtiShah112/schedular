@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
+    <title>Event Scheduler</title>
+  </head>
+  <body>
+
+    <!-- Navigation Bar -->
+    <div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+        <a href="#" class="w3-bar-item w3-button w3-text-blue w3-hover-light-blue"><b><img src="th.jpg" height="30px" width="30px"> ES </b></a>
+
+        <a href="#" class="w3-bar-item w3-button w3-right w3-hover-light-blue w3-text-light-blue">Hi, {{ session['username'] }} </a>
+    </div>
+    <div class="wrapper">
+        <div class="left">
+
+
+            <div class="side_nav">
+                <ul>
+                    <li><a href="/dashboard"><i class="far fa-home"></i>My View</a></li>
+
+					<li class="active"><a href="/add_project"><i class="fas fa-plus"></i>Add Event</a></li>
+
+                    <li><a href="/logout"><i class="fas fa-power-off"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="right">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10" style="margin:20px auto;">
+                        <div class="title"><i class="fas fa-plus"></i>Add New Event</div>
+                        <div class="row">
+                            {% if error %}
+                                <div class="col-md-12 error_form">Error: {{ error }}</div>
+                            {% endif %}
+                            {% if msg %}
+                                <div class="col-md-12 error_form">Success: {{ msg }}</div>
+                            {% endif %}
+                            <div class="col-md-10" style="margin:0px auto;">
+                                <form method="post">
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Event Name</label>
+                                        <div class="col">
+                                            {% if form %}
+                                                <input type="text" class="form-control" placeholder="Project name" name="projname" value="{{ form['ename'] }}" required>
+                                            {% else %}
+                                                <input type="text" class="form-control" placeholder="Project name" name="projname" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Event Time</label>
+                                        <div class="col">
+                                            {% if form %}
+                                                <input type="datetime-local" id="etime" name="etime" value="{{ form['etime'] }}" min="{{ edate }}" max="2018-12-14T00:00" />
+                                            {% else %}
+                                                <input type="datetime-local" id="etime" name="etime" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Reminder Time</label>
+                                        <div class="col">
+                                            {% if form %}
+                                                <input type="datetime-local" id="rtime" name="rtime" value="{{ form['rtime'] }}" min="{{ edate }}" max="2018-12-14T00:00" />
+                                            {% else %}
+                                                <input type="datetime-local" id="rtime" name="rtime" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                        <!--
+                                        <div class="col">
+                                            {% if form %}
+                                                <input type="text" class="form-control" placeholder="Last name" name="lname" value="{{ form['lname'] }}" required>
+                                            {% else %}
+                                                <input type="text" class="form-control" placeholder="Last name" name="lname" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Gender</label>
+                                            <div class="col-sm-4" style="padding-top: 7px;">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                {% if form %}
+                                                    <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male" selected="selected" required>
+                                                {% else %}
+                                                    <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male" required>
+                                                {% endif %}
+                                                <label class="custom-control-label" for="customRadioInline1">Male</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female" required>
+                                                <label class="custom-control-label" for="customRadioInline2">Female</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Address</label>
+                                        <div class="col-sm-10">
+                                            {% if form %}
+                                                <input type="text" class="form-control" placeholder="1234 Main St" name="address1" value="{{ form['address1'] }}" required>
+                                            {% else %}
+                                                <input type="text" class="form-control" placeholder="1234 Main St" name="address1" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            {% if form %}
+                                                <input type="text" class="form-control" placeholder="Apartment, studio, or floor" name="address2" value="{{ form['address'] }}">
+                                            {% else %}
+                                                <input type="text" class="form-control" placeholder="Apartment, studio, or floor" name="address2">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="form-group col-md-5">
+                                          <label for="inputCity">City</label>
+                                            {% if form %}
+                                                <input type="text" class="form-control" id="inputCity" name="city" value="{{ form['city'] }}" required>
+                                            {% else %}
+                                                <input type="text" class="form-control" id="inputCity" name="city" required>
+                                            {% endif %}
+                                        </div>
+                                       <!-- <div class="form-group col-md-3">
+                                          <label for="inputState">State</label>
+                                          <select id="inputState" class="form-control" name="state" required>
+                                              <option value="" selected>Choose...</option>
+                                              {% for name in state: %}
+                                              <option value="{{ name[0] }}">{{ name[0] }}</option>
+                                              {% endfor %}
+                                          </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                          <label for="inputZip">Zip</label>
+                                            {% if form %}
+                                                <input type="text" class="form-control" id="inputZip" name="zip" value="{{ form['zip'] }}" required>
+                                            {% else %}
+                                                <input type="text" class="form-control" id="inputZip" name="zip" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Email</label>
+                                        <div class="col-sm-10">
+                                            {% if form %}
+                                                <input type="email" class="form-control" placeholder="" name="email" value="{{ form['email'] }}" required>
+                                            {% else %}
+                                                <input type="email" class="form-control" placeholder="" name="email" required>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Login Details</label>
+                                        <div class="col">
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                  <div class="input-group-text">@</div>
+                                                </div>
+                                                {% if form %}
+                                                    <input type="text" class="form-control" placeholder="Username" name="username" value="{{ form['username'] }}" required>
+                                                {% else %}
+                                                    <input type="text" class="form-control" placeholder="Username" name="username" required>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <input type="password" class="form-control" placeholder="Password" aria-describedby="passwordHelp" name="password" required>
+                                            <small id="passwordHelp" class="form-text text-muted">Must be 8 characters long.</small>
+                                        </div>
+                                    </div>
+                                    -->
+
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.vide.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+  </body>
+</html>
